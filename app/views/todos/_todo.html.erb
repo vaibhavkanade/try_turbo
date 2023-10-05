@@ -1,20 +1,30 @@
-<%= turbo_frame_tag dom_id(todo) do %>
-  <div id="<%= dom_id todo %>">
-    <p class="my-5">
-      <strong class="block font-medium mb-1"><%= link_to todo.title, edit_todo_path(todo) %></strong>
-    </p>
-
-    <% if false %>
+<li id="<%= dom_id todo %>_item" class="list-none">
+  <%= turbo_frame_tag dom_id(todo) do %>
+    <div id="<%= dom_id todo %>" class="flex justify-between items-center">
       <p class="my-5">
-        <strong class="block font-medium mb-1">Status:</strong>
-        <%= todo.status %>
+        <strong class="block font-medium mb-1"><%= link_to todo.title, edit_todo_path(todo), class: "flex-1 #{"line-through opacity-50" if todo.complete?}" %></strong>
       </p>
 
-      <% if action_name != "show" %>
-        <%= link_to "Show this todo", todo, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-        <%= link_to 'Edit this todo', edit_todo_path(todo), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-        <hr class="mt-6">
+      <div class="flex items-center space-x-3">
+        <% if todo.complete? %>
+          <%= button_to "Mark incomplete", todo_path(todo, todo: { status: 'incomplete'}), method: :patch, class: "bg-neutral-50 px-3 py-2 rounded inline-flex items-center justify-center text-neutral-600" %>
+        <% else %>
+          <%= button_to "Mark complete", todo_path(todo, todo: { status: 'complete'}), method: :patch, class: "bg-green-50 px-3 py-2 rounded inline-flex items-center justify-center text-green-600" %>
+        <% end %>
+      </div>
+
+      <% if false %>
+        <p class="my-5">
+          <strong class="block font-medium mb-1">Status:</strong>
+          <%= todo.status %>
+        </p>
+
+        <% if action_name != "show" %>
+          <%= link_to "Show this todo", todo, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+          <%= link_to 'Edit this todo', edit_todo_path(todo), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+          <hr class="mt-6">
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-<% end %>
+    </div>
+  <% end %>
+</li>
