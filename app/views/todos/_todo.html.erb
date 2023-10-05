@@ -1,18 +1,20 @@
-<div id="<%= dom_id todo %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1"><%= todo.title %></strong>
-  </p>
-
-  <% if false %>
+<%= turbo_frame_tag dom_id(todo) do %>
+  <div id="<%= dom_id todo %>">
     <p class="my-5">
-      <strong class="block font-medium mb-1">Status:</strong>
-      <%= todo.status %>
+      <strong class="block font-medium mb-1"><%= link_to todo.title, edit_todo_path(todo) %></strong>
     </p>
 
-    <% if action_name != "show" %>
-      <%= link_to "Show this todo", todo, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      <%= link_to 'Edit this todo', edit_todo_path(todo), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-      <hr class="mt-6">
-  <% end %>
-  <% end %>
-</div>
+    <% if false %>
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Status:</strong>
+        <%= todo.status %>
+      </p>
+
+      <% if action_name != "show" %>
+        <%= link_to "Show this todo", todo, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+        <%= link_to 'Edit this todo', edit_todo_path(todo), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+        <hr class="mt-6">
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
